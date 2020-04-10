@@ -12,8 +12,13 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core';
+
+import TimerIcon from '@material-ui/icons/Timer'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
+import Delete from '@material-ui/icons/Delete'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -40,6 +45,8 @@ const TarefasTable = props => {
 
   const classes = useStyles();
 
+
+
   return (
     <Card
       {...rest}
@@ -55,11 +62,40 @@ const TarefasTable = props => {
                   <TableCell>Descrição</TableCell>
                   <TableCell>Categoria</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
              </TableHead>
 
             <TableBody>
-
+              {tarefas.map((tarefa)=>{
+                return(
+                <TableRow key={tarefa.id}>
+                  <TableCell>{tarefa.id}</TableCell>
+                  <TableCell>{tarefa.descricao}</TableCell>
+                  <TableCell>{tarefa.categoria}</TableCell>
+                  <TableCell>{tarefa.done ? 'Feito' : 'Pendente'}</TableCell>
+                  <TableCell>
+                    <IconButton onClick={e => props.alterarStatus(tarefa.id)} color='secondary'>
+                      {
+                        tarefa.done 
+                        ? <DoneAllIcon/>
+                        : <TimerIcon/>
+                      }
+                     
+                    </IconButton>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton onClick={e => props.deletar(tarefa.id)} color='inherit'>
+                      <Delete/>
+                    </IconButton>
+                  </TableCell>
+                  
+                </TableRow>
+                )
+              })
+              
+              }
             </TableBody>
 
            </Table>

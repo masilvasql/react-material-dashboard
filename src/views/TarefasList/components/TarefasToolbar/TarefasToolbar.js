@@ -40,11 +40,19 @@ const TarefasToolbar = props => {
 
   const [descricao, setDescricao] = useState('')
   const [categoria, setCategoria] = useState('')
-  
-  const submit = (event)=>{
+
+  const submit = (event) => {
     event.preventDefault();
-    console.log(`VALORES: ${descricao}  ---- ${categoria}`)
-  } 
+    const tarefa = {
+      descricao: descricao,
+      categoria: categoria
+    }
+
+    props.salvar(tarefa)
+    setDescricao('')
+    setCategoria('')
+
+  }
 
   const classes = useStyles();
 
@@ -58,30 +66,30 @@ const TarefasToolbar = props => {
       </div>
       <div className={classes.row}>
         <Grid container>
-          <Grid item md={4} sm ={4}>
+          <Grid item md={4} sm={4}>
             <TextField
               className={classes.searchInput}
               placeholder="Descrição da tarefa"
               label="Descrição"
               fullWidth
               value={descricao}
-              onChange = {(e)=> setDescricao(e.target.value)}
+              onChange={(e) => setDescricao(e.target.value)}
             />
           </Grid>
 
-          <Grid item md={4} sm ={4}>
+          <Grid item md={4} sm={4}>
             <FormControl fullWidth>
               <InputLabel>Categoria: </InputLabel>
-              <Select value={categoria} onChange ={(e)=> setCategoria(e.target.value)}>
+              <Select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
                 <MenuItem value=''>Selecione</MenuItem>
                 <MenuItem value={'TRABALHO'}>TRABALHO</MenuItem>
-                <MenuItem value={"ESTUDO"}>ESTUDO</MenuItem>
-                <MenuItem value={"OUTROS"}>OUTROS</MenuItem>
+                <MenuItem value={'ESTUDOS'}>ESTUDO</MenuItem>
+                <MenuItem value={'OUTROS'}>OUTROS</MenuItem>
               </Select>
-            </FormControl>  
+            </FormControl>
           </Grid>
 
-          <Grid item md={4} sm ={4}>
+          <Grid item md={4} sm={4}>
             <Button onClick={submit} variant="contained" color="secondary">
               Adicionar
               </Button>
