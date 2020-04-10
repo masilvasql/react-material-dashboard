@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const API_URL = 'https://minhastarefas-api.herokuapp.com/tarefas'
-const HEADERS = { 'x-tenant-id': 'teste@email.com' }
+
 
 const TarefasLista = () => { //componente principal (componente) 
   const classes = useStyles();
@@ -27,7 +27,7 @@ const TarefasLista = () => { //componente principal (componente)
 
   const salvar = (tarefa) => {
     axios.post(API_URL, tarefa, {
-      headers: HEADERS
+      headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
     }).then(response => {
       const novaTarefa = response.data
       setTarefas([...tarefas, novaTarefa])
@@ -41,7 +41,7 @@ const TarefasLista = () => { //componente principal (componente)
 
   const listarTarefas = () => {
     axios.get(API_URL, {
-      headers: HEADERS
+      headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
     }).then(response => {
       const listaTarefas = response.data
       setTarefas(listaTarefas)
@@ -52,7 +52,7 @@ const TarefasLista = () => { //componente principal (componente)
   }
 
   const alterarStatus = (id) => {
-    axios.patch(`${API_URL}/${id}`, null, { headers: HEADERS })
+    axios.patch(`${API_URL}/${id}`, null, { headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') } })
       .then(response => {
         const lista = [...tarefas]
         lista.forEach(tarefa => {
@@ -70,7 +70,7 @@ const TarefasLista = () => { //componente principal (componente)
   }
 
   const deletar = (id) => {
-    axios.delete(`${API_URL}/${id}`, { headers: HEADERS })
+    axios.delete(`${API_URL}/${id}`, { headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') } })
       .then(response => {
         const lista = [...tarefas.filter(tarefa => tarefa.id !== id)]
         setTarefas(lista)
